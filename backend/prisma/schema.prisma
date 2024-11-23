@@ -7,8 +7,76 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Customer {
+  id Int @id @default(autoincrement())
+
+  userId Int?  @unique
+  user   User? @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rides Ride[]
+
+  @@map("customers")
+}
+
 model User {
-  id    Int     @default(autoincrement()) @id
+  id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customer Customer? @relation()
+
+  @@map("users")
+}
+
+model Driver {
+  id          Int     @id @default(autoincrement())
+  name        String?
+  description String?
+  vehicle     String
+  reviewId    Int?
+  review      Review? @relation(fields: [reviewId], references: [id])
+  costPerKm   Float
+  minKm       Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rides Ride[]
+
+  @@map("drivers")
+}
+
+model Review {
+  id      Int    @id @default(autoincrement())
+  rating  Int
+  comment String
+
+  Driver Driver[]
+
+  @@map("reviews")
+}
+
+model Ride {
+  id          Int    @id @default(autoincrement())
+  origin      String
+  destination String
+  distance    Float
+  duration    String
+  value       Float
+
+  customerId Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+  driverId   Int
+  driver     Driver   @relation(fields: [driverId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("rides")
 }

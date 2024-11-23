@@ -21,7 +21,8 @@
     "prisma:migrate": "npx dotenv -e ../.env -- npx prisma migrate dev --name init",
     "prisma:migrate:dev": "npx dotenv -e ../.env -- npx prisma migrate dev",
     "prisma:generate": "npx dotenv -e ../.env -- npx prisma generate",
-    "start:migrate:dev": "npm run prisma:migrate:dev && npm run start:dev"
+    "prisma:seed": "npx dotenv -e ../.env -- ts-node prisma/seed.ts",
+    "start:migrate:dev": "npm run prisma:migrate:dev && npm run prisma:seed && npm run start:dev"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
