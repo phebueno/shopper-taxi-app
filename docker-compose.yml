@@ -23,7 +23,7 @@ services:
       - ./backend:/app
       - /app/node_modules
     environment:
-      - DATABASE_URL=postgresql://manager:123456@db:5432/shopper-taxi
+      - DATABASE_URL=postgresql://${DB_USER:-manager}:${DB_PASSWORD:-123456}@db:${DB_PORT:-5432}/${DB_NAME:-shopper-taxi}
     depends_on:
       - db
 
@@ -33,9 +33,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: shopper-taxi
-      POSTGRES_USER: manager
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: ${DB_NAME:-shopper-taxi}
+      POSTGRES_USER: ${DB_USER:-manager}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-123456}
     volumes:
       - db_data:/var/lib/postgresql/data
 
