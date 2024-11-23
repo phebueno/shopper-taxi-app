@@ -12,7 +12,6 @@ export class RidesService {
     return `Viagem confirmada com os dados: ${updateRideDto}`;
   }
 
-  // Visualização de rotas
   getRides(customerId: string, driverId?: string) {
     return `Visualizando rotas para o cliente ${customerId} e motorista ${driverId || 'nenhum motorista especificado'}`;
   }
