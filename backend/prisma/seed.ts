@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 async function main() {
+  await prisma.driver.deleteMany();
+  await prisma.review.deleteMany();
   const reviews = await prisma.review.createMany({
     data: [
       {
@@ -20,15 +22,16 @@ async function main() {
       },
     ],
   });
-    const drivers = await prisma.driver.createMany({
-      data: [{
+  const drivers = await prisma.driver.createMany({
+    data: [
+      {
         id: 1,
         name: 'Homer Simpson',
         description: `Olá! Sou o Homer, seu motorista camarada! Relaxe e aproveite o passeio, com direito a rosquinhas e boas risadas (e talvez alguns desvios).`,
         vehicle: `Plymouth Valiant 1973 rosa e enferrujado`,
         costPerKm: 2.5,
         minKm: 1,
-        reviewId: 1
+        reviewId: 1,
       },
       {
         id: 2,
@@ -37,7 +40,7 @@ async function main() {
         vehicle: `Dodge Charger R/T 1970 modificado`,
         costPerKm: 5.0,
         minKm: 5,
-        reviewId: 2
+        reviewId: 2,
       },
       {
         id: 3,
@@ -46,9 +49,10 @@ async function main() {
         vehicle: `Aston Martin DB5 clássico`,
         costPerKm: 10.0,
         minKm: 10,
-        reviewId: 3
-      }],
-    });  
+        reviewId: 3,
+      },
+    ],
+  });
   console.log({ drivers });
 }
 main()

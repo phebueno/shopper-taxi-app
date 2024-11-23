@@ -13,9 +13,4 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-
-  @Get('users')
-  async getPublishedPosts(): Promise<User[]> {
-    return this.userService.users({})
-  }
 }
