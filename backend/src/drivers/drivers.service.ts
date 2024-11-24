@@ -6,6 +6,10 @@ import { DriverDto } from './dto/driver.dto';
 export class DriversService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async getDriverById(id: number) {
+    return await this.prisma.driver.findUnique({ where: { id } });
+  }
+
   async getAvailableDrivers(currentDistance: number): Promise<DriverDto[]> {
     const kmDistance = currentDistance / 1000;
 

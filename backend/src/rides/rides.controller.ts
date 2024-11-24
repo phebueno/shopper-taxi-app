@@ -21,15 +21,15 @@ export class RidesController {
   }
 
   @Patch('confirm')
-  confirmRide(@Body() updateRideDto: UpdateRideDto) {
-    return this.ridesService.confirmRide(updateRideDto);
+  async confirmRide(@Body() updateRideDto: UpdateRideDto) {
+    return await this.ridesService.confirmRide(updateRideDto);
   }
 
   @Get(':customer_id')
-  viewRides(
+  async viewRides(
     @Param('customer_id') customerId: string,
     @Query('driver_id') driverId: string,
   ) {
-    return this.ridesService.getRides(customerId, driverId);
+    return await this.ridesService.getRides(customerId, driverId);
   }
 }

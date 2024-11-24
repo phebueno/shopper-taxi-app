@@ -1,7 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 
 export const validationExceptionFactory = (errors: any[]): BadRequestException => {
-  // Verificar se o erro contém a propriedade 'constraints' antes de acessá-la
   const errorDescription = errors
     .map((e) => {
       const constraints = e.constraints ? Object.values(e.constraints).join(', ') : 'Some constraints are missing';
