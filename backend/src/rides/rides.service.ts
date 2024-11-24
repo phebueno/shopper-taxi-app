@@ -124,7 +124,37 @@ export class RidesService {
     };
   }
 
-  getRides(customerId: string, driverId?: string) {
-    return `Visualizando rotas para o cliente ${customerId} e motorista ${driverId || 'nenhum motorista especificado'}`;
+  async getRides(customerId: string, driverId?: number) {
+    const rides = await this.prismaService.ride.findMany({
+      where: { customerId,
+        ...(driverId && { driverId })
+       },
+      select: {
+        id: true,
+        createdAt: true,
+        origin: true,
+        destination: true,
+        distance: true,
+        duration: true,
+        driver: {
+          select: { id: true, name: true },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (!rides || rides.length === 0) {
+      throw new NotFoundException({
+        error_code: 'NO_RIDES_FOUND',
+        error_description: `There were no rides found for customer ID ${customerId}.`,
+      });
+    }
+
+    const formattedRide = rides.map(({ createdAt, ...ride }) => ({
+      ...ride,
+      date: createdAt,
+    }));
+
+    return { customer_id: customerId, rides: formattedRide };
   }
 }
