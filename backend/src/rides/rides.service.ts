@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { CreateRideDto } from './dto/create-ride.dto';
 import { UpdateRideDto } from './dto/update-ride.dto';
 import { GoogleService } from '../google/google.service';
@@ -47,6 +47,15 @@ export class RidesService {
           'Google could not find a route for the provided coordinates.',
       });
     }
+    
+    if(!googleRoute.routes[0].distanceMeters){
+      throw new NotAcceptableException({
+        error_code: 'INVALID_DISTANCE',
+        error_description:
+          'Google could not calculate the distance for the provided coordinates.',
+      });
+    }
+
     const availableDrivers = await this.driversService.getAvailableDrivers(
       googleRoute.routes[0].distanceMeters,
     );

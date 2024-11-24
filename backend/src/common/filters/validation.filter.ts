@@ -1,13 +1,17 @@
 import { BadRequestException } from '@nestjs/common';
 
-export const validationExceptionFactory = (
-  errors: any[],
-): BadRequestException => {
+export const validationExceptionFactory = (errors: any[]): BadRequestException => {
+  // Verificar se o erro contém a propriedade 'constraints' antes de acessá-la
+  const errorDescription = errors
+    .map((e) => {
+      const constraints = e.constraints ? Object.values(e.constraints).join(', ') : 'Some constraints are missing';
+      return `${e.property}: ${constraints}`;
+    })
+    .join(' | ');
+
   return new BadRequestException({
     error_code: 'INVALID_DATA',
-    error_description: errors
-      .map((e) => `${e.property}: ${Object.values(e.constraints).join(', ')}`)
-      .join(' | '),
+    error_description: errorDescription,
   });
 };
 
