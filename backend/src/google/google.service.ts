@@ -39,7 +39,7 @@ export class GoogleService {
       );
       return response.data;
     } catch (error) {
-        //TODO: TURN ERRORS INTO DEFAULT ERROR (OR INVALID DATA)
+      //TODO: TURN ERRORS INTO DEFAULT ERROR (OR INVALID DATA)
       throw new Error(`Google API Error: ${error.message}`);
     }
   }

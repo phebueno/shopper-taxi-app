@@ -5,7 +5,6 @@ import { GoogleService } from '../google/google.service';
 import { RideEstimate } from './interfaces/rides.interface';
 import { GoogleRoute } from '../google/interfaces/google-route.interface';
 import { DriversService } from '../drivers/drivers.service';
-import { Driver } from '@prisma/client';
 import { DriverDto } from '../drivers/dto/driver.dto';
 
 @Injectable()

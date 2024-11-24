@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { GoogleService } from './google.service';
 
 @Module({
-  providers: [GoogleService]
+  providers: [GoogleService],
 })
 export class GoogleModule {}

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { RidesService } from './rides.service';
 import { CreateRideDto } from './dto/create-ride.dto';
 import { UpdateRideDto } from './dto/update-ride.dto';
@@ -11,7 +19,7 @@ export class RidesController {
   async create(@Body() createRideDto: CreateRideDto) {
     return await this.ridesService.estimateRide(createRideDto);
   }
-  
+
   @Patch('confirm')
   confirmRide(@Body() updateRideDto: UpdateRideDto) {
     return this.ridesService.confirmRide(updateRideDto);

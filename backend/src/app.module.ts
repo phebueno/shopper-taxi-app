@@ -8,7 +8,13 @@ import { CustomersModule } from './customers/customers.module';
 import { GoogleModule } from './google/google.module';
 
 @Module({
-  imports: [PrismaModule, RidesModule, DriversModule, CustomersModule, GoogleModule],
+  imports: [
+    PrismaModule,
+    RidesModule,
+    DriversModule,
+    CustomersModule,
+    GoogleModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
