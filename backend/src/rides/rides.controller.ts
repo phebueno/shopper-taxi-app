@@ -8,8 +8,8 @@ export class RidesController {
   constructor(private readonly ridesService: RidesService) {}
 
   @Post('estimate')
-  create(@Body() createRideDto: CreateRideDto) {
-    return this.ridesService.estimateRide(createRideDto);
+  async create(@Body() createRideDto: CreateRideDto) {
+    return await this.ridesService.estimateRide(createRideDto);
   }
   
   @Patch('confirm')
