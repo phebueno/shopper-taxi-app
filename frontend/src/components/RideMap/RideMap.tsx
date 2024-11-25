@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
-  AdvancedMarker,
   APIProvider,
   Map,
   Marker,
-  Pin,
-  useMap,
-  useMapsLibrary,
 } from "@vis.gl/react-google-maps";
 import EncodedPolylineRenderer from "./EncodedPolylineRenderer";
 
-type Poi = { key: string; location: google.maps.LatLngLiteral };
-const locations: Poi[] = [
-  { key: "operaHouse", location: { lat: -33.8567844, lng: 151.213108 } },
-  { key: "tarongaZoo", location: { lat: -33.8472767, lng: 151.2188164 } },
-];
-
 type GoogleMapsProps = {
-  rideRoute: any; // Ajuste conforme necessário
+  rideRoute: any; // TODO: GET CORRECT METHOD FROM DOCS
 };
 
-const GoogleMaps: React.FC<GoogleMapsProps> = ({ rideRoute }) => {
- 
+const RideMap: React.FC<GoogleMapsProps> = ({ rideRoute }) => { 
   if (!rideRoute) return <p>Rota não encontrada!</p>;
 
   return (
@@ -35,7 +24,7 @@ const GoogleMaps: React.FC<GoogleMapsProps> = ({ rideRoute }) => {
         defaultZoom={9}
         gestureHandling={"greedy"}
         fullscreenControl={false}
-      >
+      >              
         <EncodedPolylineRenderer
           encodedPolyline={
             rideRoute.routeResponse.routes[0].legs[0].polyline.encodedPolyline
@@ -58,12 +47,4 @@ const GoogleMaps: React.FC<GoogleMapsProps> = ({ rideRoute }) => {
   );
 };
 
-export default GoogleMaps;
-
-{
-  /* <AdvancedMarker
-          key={locations[0].key}
-          position={locations[0].location}>
-        <Pin background={'#FBBC04'} glyphColor={'#000'} borderColor={'#000'} />
-        </AdvancedMarker> */
-}
+export default RideMap;
