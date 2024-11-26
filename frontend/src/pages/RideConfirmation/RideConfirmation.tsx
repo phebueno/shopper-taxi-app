@@ -4,7 +4,7 @@ import { CustomerRequest, Driver, RideEstimate } from "../../types/rideTypes";
 import { RideMap } from "../../components/RideMap";
 import { DriverCard } from "../../components/DriverCard";
 import api from "../../services/api";
-import { Box } from "@chakra-ui/react";
+import { Box, Heading, Text, VStack } from "@chakra-ui/react";
 import { RideInfoCard } from "../../components/RideInfoCard";
 
 type RideConfirmationState = {
@@ -54,32 +54,59 @@ const RideConfirmation: React.FC = () => {
   };
 
   if (!state) {
-    return <p>Informações da corrida não disponíveis.</p>;
+    return (
+      <Box textAlign="center" py={10}>
+        <Text fontSize="lg" fontWeight="bold" color="red.500">
+          Informações da corrida não disponíveis.
+        </Text>
+      </Box>
+    );
   }
 
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>Confirmação de Corrida</h1>
-      <Box mb={6}>
+    <Box maxW="container.lg" mx="auto" py={8} px={4}>
+      <Heading as="h1" size="lg" mb={6} textAlign="center" color="teal.500">
+        Confirmação de Corrida
+      </Heading>
+      <VStack align="stretch">
         <RideInfoCard
           rideInfo={rideInfo}
           customerRequest={customerRequest}
           retryRide={retryRide}
         />
-      </Box>
-      <RideMap rideRoute={rideInfo} />
-      {rideInfo.options.length > 0 ? (
-        rideInfo.options.map((driver) => (
-          <DriverCard
-            key={driver.id}
-            driver={driver}
-            confirmRide={confirmRide}
-          />
-        ))
-      ) : (
-        <p>Não há motoristas disponíveis para a rota!</p>
-      )}
-    </div>
+        <Box
+          border="1px solid"
+          borderColor="gray.200"
+          borderRadius="md"
+          overflow="hidden"
+          boxShadow="md"
+        >
+          <RideMap rideRoute={rideInfo} />
+        </Box>
+        <Box>
+          {rideInfo.options.length > 0 ? (
+            <VStack>
+              {rideInfo.options.map((driver) => (
+                <DriverCard
+                  key={driver.id}
+                  driver={driver}
+                  confirmRide={confirmRide}
+                />
+              ))}
+            </VStack>
+          ) : (
+            <Text
+              fontSize="lg"
+              fontWeight="medium"
+              color="gray.600"
+              textAlign="center"
+            >
+              Não há motoristas disponíveis para a rota!
+            </Text>
+          )}
+        </Box>
+      </VStack>
+    </Box>
   );
 };
 
