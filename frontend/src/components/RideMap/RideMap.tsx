@@ -22,8 +22,9 @@ const RideMap: React.FC<GoogleMapsProps> = ({ rideRoute }) => {
         style={{ width: "50vw", height: "50vh" }}
         defaultCenter={{ lat: 43.65, lng: -79.38 }}
         defaultZoom={9}
-        gestureHandling={"greedy"}
+        gestureHandling={"none"}
         fullscreenControl={false}
+        disableDefaultUI={true}
       >              
         <EncodedPolylineRenderer
           encodedPolyline={
