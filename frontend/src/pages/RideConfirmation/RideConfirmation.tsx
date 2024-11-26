@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CustomerRequest, Driver, RideEstimate } from "../../types/rideTypes";
 import { RideMap } from "../../components/RideMap";
 import { DriverCard } from "../../components/DriverCard";
 import api from "../../services/api";
+import { Box } from "@chakra-ui/react";
+import { RideInfoCard } from "../../components/RideInfoCard";
 
 type RideConfirmationState = {
   customerRequest: CustomerRequest;
@@ -15,16 +17,27 @@ const RideConfirmation: React.FC = () => {
   const location = useLocation();
   const state = location.state as RideConfirmationState;
 
-  if (!state) {
-    return <p>Informações da corrida não disponíveis.</p>;
-  }
+  const [customerRequest, setCustomerRequest] = useState(state.customerRequest);
+  const [rideInfo, setRideInfo] = useState(state.rideInfo);
+
+  const retryRide = async (customerRequest: CustomerRequest) => {
+    try {
+      const payload = customerRequest;
+      setCustomerRequest(customerRequest);
+
+      const response = await api.post("/ride/estimate", payload);
+      setRideInfo(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar a rota:", error);
+    }
+  };
 
   const confirmRide = async (driver: Driver) => {
     try {
       const payload = {
-        ...state.customerRequest,
-        distance: state.rideInfo.distance,
-        duration: state.rideInfo.duration,
+        ...customerRequest,
+        distance: rideInfo.distance,
+        duration: rideInfo.duration,
         driver: {
           id: driver.id,
           name: driver.name,
@@ -40,12 +53,23 @@ const RideConfirmation: React.FC = () => {
     }
   };
 
+  if (!state) {
+    return <p>Informações da corrida não disponíveis.</p>;
+  }
+
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>Ride Confirmation</h1>
-      <RideMap rideRoute={state.rideInfo} />
-      {state.rideInfo.options.length > 0 ? (
-        state.rideInfo.options.map((driver) => (
+      <h1>Confirmação de Corrida</h1>
+      <Box mb={6}>
+        <RideInfoCard
+          rideInfo={rideInfo}
+          customerRequest={customerRequest}
+          retryRide={retryRide}
+        />
+      </Box>
+      <RideMap rideRoute={rideInfo} />
+      {rideInfo.options.length > 0 ? (
+        rideInfo.options.map((driver) => (
           <DriverCard
             key={driver.id}
             driver={driver}

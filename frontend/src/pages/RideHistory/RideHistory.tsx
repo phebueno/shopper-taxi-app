@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DriverRide } from "../../types/rideTypes";
 import api from "../../services/api";
 import { useParams } from "react-router-dom";
-import { Box, Button, Flex, Input, Select, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import { RideCard } from "../../components/RideCard";
 import DriverSelect from "./DriverSelect";
 

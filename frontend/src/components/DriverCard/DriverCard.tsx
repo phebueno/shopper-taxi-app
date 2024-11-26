@@ -47,7 +47,7 @@ const DriverCard: React.FC<DriverProps> = ({ driver, confirmRide }) => {
       </Text>
 
       <Text mb="2">
-        <strong>Preço:</strong> {driver.value}
+        <strong>Preço:</strong> R$ {driver.value.toFixed(2).replace(".", ",")}
       </Text>
 
       <Text fontSize="sm" color="gray.600">

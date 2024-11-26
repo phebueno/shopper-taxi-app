@@ -2,7 +2,6 @@ import {
   NativeSelectField,
   NativeSelectRoot,
 } from "@chakra-ui/react";
-import { useState } from "react";
 
 interface DriverSelectProps {
     driverId: number; 
