@@ -1,1 +1,1 @@
-export { default } from './RideConfirmation';
+export { default as RideConfirmation } from './RideConfirmation';

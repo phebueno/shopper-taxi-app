@@ -18,6 +18,19 @@ export interface Driver {
   value: number;
 }
 
+export interface DriverRide {
+  date: Date;
+  id: number;
+  origin: string;
+  destination: string;
+  distance: number;
+  duration: string;
+  driver: {
+      id: number;
+      name: string;
+  };
+}
+
 export interface RideEstimate {
   origin: {
     latitude: number;

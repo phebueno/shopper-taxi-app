@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CustomerRequest, Driver, RideEstimate } from "../../types/rideTypes";
 import { RideMap } from "../../components/RideMap";
 import { DriverCard } from "../../components/DriverCard";
@@ -11,6 +11,7 @@ type RideConfirmationState = {
 };
 
 const RideConfirmation: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as RideConfirmationState;
 
@@ -32,7 +33,8 @@ const RideConfirmation: React.FC = () => {
       };
 
       const response = await api.patch("/ride/confirm", payload);
-      console.log(response.data)
+      console.log(response.data);
+      navigate(`/ride/history/${state.customerRequest.customer_id}`);
     } catch (error) {
       console.error("Erro ao buscar a rota:", error);
     }
