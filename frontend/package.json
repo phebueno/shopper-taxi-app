@@ -11,8 +11,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.2.0",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "@vis.gl/react-google-maps": "^1.4.0",
     "axios": "^1.7.7",
+    "framer-motion": "^11.11.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.1"

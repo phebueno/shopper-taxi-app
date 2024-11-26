@@ -1,6 +1,5 @@
 import { useState } from "react";
 import api from "../../services/api";
-import { RideMap } from "../../components/RideMap";
 import { useNavigate } from "react-router-dom";
 import { CustomerRequest } from "../../types/rideTypes";
 
@@ -8,7 +7,6 @@ const Dashboard: React.FC = () => {
   const [customerId, setCustomerId] = useState("");
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
-  const [rideRoute, setRideRoute] = useState("");
 
   const navigate = useNavigate();
 
@@ -23,7 +21,6 @@ const Dashboard: React.FC = () => {
       } as CustomerRequest;
 
       const response = await api.post("/ride/estimate", payload);
-      setRideRoute(response.data);
       setTimeout(() => {
         console.log("Rota encontrada!");
         navigate(`/ride/confirm`, {
