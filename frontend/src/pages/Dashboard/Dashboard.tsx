@@ -1,6 +1,8 @@
 import { useState } from "react";
 import api from "../../services/api";
 import { RideMap } from "../../components/RideMap";
+import { useNavigate } from "react-router-dom";
+import { CustomerRequest } from "../../types/rideTypes";
 
 const Dashboard: React.FC = () => {
   const [customerId, setCustomerId] = useState("");
@@ -8,17 +10,29 @@ const Dashboard: React.FC = () => {
   const [destination, setDestination] = useState("");
   const [rideRoute, setRideRoute] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await api.post("/ride/estimate", {
+      const payload = {
         customer_id: customerId,
         origin,
         destination,
-      });
-      console.log("Dados da rota:", response.data);
+      } as CustomerRequest;
+
+      const response = await api.post("/ride/estimate", payload);
       setRideRoute(response.data);
+      setTimeout(() => {
+        console.log("Rota encontrada!");
+        navigate(`/ride/confirm`, {
+          state: {
+            customerRequest: payload,
+            rideInfo: response.data,
+          },
+        });
+      }, 3000);
     } catch (error) {
       console.error("Erro ao buscar a rota:", error);
     }
@@ -51,7 +65,6 @@ const Dashboard: React.FC = () => {
           />
           <button type="submit">Buscar Rota</button>
         </form>
-        <RideMap rideRoute={rideRoute} />
       </div>
     </>
   );
