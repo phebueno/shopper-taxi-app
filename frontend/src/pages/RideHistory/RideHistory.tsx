@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { DriverRide } from "../../types/rideTypes";
 import api from "../../services/api";
 import { useParams } from "react-router-dom";
+import { Box, Text } from "@chakra-ui/react";
+import { RideCard } from "../../components/RideCard";
 
 type RideHistoryResponse = {
   customer_id: string;
@@ -11,7 +13,7 @@ type RideHistoryResponse = {
 const RideHistory: React.FC = () => {
   const { customer_id } = useParams<{ customer_id: string }>();
 
-  const [rideHistory, setRideHistory] = useState<RideHistoryResponse[]>([]);
+  const [rideHistory, setRideHistory] = useState<RideHistoryResponse>();
 
   const fetchRideHistory = async (customerId?: string, driverId?: number) => {
     if (customerId) {
@@ -40,9 +42,16 @@ const RideHistory: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>Ride History</h1>
-    </div>
+    <Box padding={6}>
+      <Text as="h1" fontSize="2xl" fontWeight="bold" mb={6}>
+        Histórico de Viagens
+      </Text>
+      {rideHistory?.rides.length ? (
+        rideHistory.rides.map((ride) => <RideCard key={ride.id} ride={ride} />)
+      ) : (
+        <Text>Nenhuma viagem encontrada.</Text>
+      )}
+    </Box>
   );
 };
 

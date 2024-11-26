@@ -1,0 +1,62 @@
+import React from "react";
+import { Box, Text } from "@chakra-ui/react";
+import { DriverRide } from "../../types/rideTypes";
+
+interface RideCardProps {
+  ride: DriverRide;
+}
+
+const RideCard: React.FC<RideCardProps> = ({ ride }) => {
+  const formatDuration = (duration: string): string => {
+    const totalSeconds = parseInt(duration.replace("s", ""), 10);
+    if (isNaN(totalSeconds)) {
+      return "Duração inválida";
+    }
+
+    if (totalSeconds >= 3600) {
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      return `${hours}h ${minutes > 0 ? `${minutes}m` : ""}`;
+    } else if (totalSeconds >= 60) {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes}m ${seconds > 0 ? `${seconds}s` : ""}`;
+    } else {
+      return `${totalSeconds}s`;
+    }
+  };
+
+  return (
+    <Box
+      borderWidth="1px"
+      borderRadius="md"
+      boxShadow="sm"
+      p={4}
+      mb={4}
+      textAlign="left"
+      background="white"
+    >
+      <Text fontWeight="bold">Origem: {ride.origin}</Text>
+      <Text fontWeight="bold">Destino: {ride.destination}</Text>
+      <Text>
+        Distância: {(ride.distance / 1000).toFixed(2).replace(".", ",")} km
+      </Text>
+      <Text>Duração: {formatDuration(ride.duration)}</Text>
+      <Text>Motorista: {ride.driver.name}</Text>
+      <Text>
+        Data:{" "}
+        {new Date(ride.date).toLocaleString("pt-BR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })}
+      </Text>
+    </Box>
+  );
+};
+
+export default RideCard;
