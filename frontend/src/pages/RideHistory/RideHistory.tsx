@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DriverRide } from "../../types/rideTypes";
 import api from "../../services/api";
 import { useParams } from "react-router-dom";
-import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
 import { RideCard } from "../../components/RideCard";
 import DriverSelect from "./DriverSelect";
 
@@ -55,9 +55,9 @@ const RideHistory: React.FC = () => {
 
   return (
     <Box padding={6}>
-      <Text as="h1" fontSize="2xl" fontWeight="bold" mb={6}>
+      <Heading as="h1" size="lg" mb={6} textAlign="center" color="teal.500">
         Histórico de Viagens
-      </Text>
+      </Heading>
       <Box mb={4}>
         <Text>Pesquisar por outro ID de usuário:</Text>
         <Input

@@ -2,6 +2,14 @@ import { useState } from "react";
 import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import { CustomerRequest } from "../../types/rideTypes";
+import {
+  Box,
+  Button,
+  Input,
+  Text,
+  VStack,
+  Heading,
+} from "@chakra-ui/react";
 
 const Dashboard: React.FC = () => {
   const [customerId, setCustomerId] = useState("");
@@ -13,6 +21,10 @@ const Dashboard: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!customerId || !origin || !destination) {
+      return;
+    }
+
     try {
       const payload = {
         customer_id: customerId,
@@ -21,49 +33,89 @@ const Dashboard: React.FC = () => {
       } as CustomerRequest;
 
       const response = await api.post("/ride/estimate", payload);
+   
       setTimeout(() => {
-        console.log("Rota encontrada!");
         navigate(`/ride/confirm`, {
           state: {
             customerRequest: payload,
             rideInfo: response.data,
           },
         });
-      }, 3000);
+      }, 1500);
     } catch (error) {
-      console.error("Erro ao buscar a rota:", error);
+      console.error("Erro ao buscar a rota:", error);      
     }
   };
+
   return (
-    <>
-      <h1>Shopper Taxi</h1>
-      <div className="card">
+    <Box maxW="lg" mx="auto" py={8} px={4}>
+      <Heading as="h1" size="lg" textAlign="center" mb={8} color="teal.500">
+        Shopper Taxi
+      </Heading>
+      <Box
+        bg="white"
+        boxShadow="md"
+        borderRadius="md"
+        p={6}
+        border="1px solid"
+        borderColor="gray.200"
+      >
         <form onSubmit={handleSubmit}>
-          <input
-            id="customerId"
-            type="text"
-            value={customerId}
-            onChange={(e) => setCustomerId(e.target.value)}
-            placeholder="Digite seu ID de usuário"
-          />
-          <input
-            id="origin"
-            type="text"
-            value={origin}
-            onChange={(e) => setOrigin(e.target.value)}
-            placeholder="Digite a origem"
-          />
-          <input
-            id="destination"
-            type="text"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-            placeholder="Digite o destino"
-          />
-          <button type="submit">Buscar Rota</button>
+          <VStack >
+            <Box                 width={"100%"}
+            >
+              <Text mb={1} fontWeight="bold">
+                ID do Usuário
+              </Text>
+              <Input
+                type="text"
+                value={customerId}
+                onChange={(e) => setCustomerId(e.target.value)}
+                placeholder="Digite seu ID de usuário"
+                borderColor="gray.300"
+              />
+            </Box>
+
+            <Box                 width={"100%"}
+            >
+              <Text mb={1} fontWeight="bold">
+                Origem
+              </Text>
+              <Input
+                type="text"
+                value={origin}
+                onChange={(e) => setOrigin(e.target.value)}
+                placeholder="Digite a origem"
+                borderColor="gray.300"
+              />
+            </Box>
+
+            <Box                 width={"100%"}
+            >
+              <Text mb={1} fontWeight="bold">
+                Destino
+              </Text>
+              <Input
+                type="text"
+                value={destination}
+                onChange={(e) => setDestination(e.target.value)}
+                placeholder="Digite o destino"
+                borderColor="gray.300"
+              />
+            </Box>
+
+            <Button
+              type="submit"
+              colorScheme="teal"
+              width="full"
+              disabled={!customerId || !origin || !destination}
+            >
+              Buscar Rota
+            </Button>
+          </VStack>
         </form>
-      </div>
-    </>
+      </Box>
+    </Box>
   );
 };
 
