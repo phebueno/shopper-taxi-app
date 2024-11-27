@@ -28,13 +28,11 @@ const RideHistory: React.FC = () => {
 
       try {
         setIsLoading(true);
-        console.log('here');
         const response = await api.get(
           `/ride/${customerId}${
             queryParams.toString() ? `?${queryParams.toString()}` : ""
           }`
         );
-        console.log(response.data);
         setRideHistory(response.data);
         setIsLoading(false);
       } catch (error) {
