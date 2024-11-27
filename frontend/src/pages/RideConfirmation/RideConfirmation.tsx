@@ -6,6 +6,8 @@ import { RideInfoCard } from "@/components/RideInfoCard";
 import { RideMap } from "@/components/RideMap";
 import { DriverCard } from "@/components/DriverCard";
 import api from "@/services/api";
+import { toaster } from "@/components/ui/toaster";
+import { defaultErrorToast } from "@/errors/toastErrors";
 
 type RideConfirmationState = {
   customerRequest: CustomerRequest;
@@ -27,8 +29,10 @@ const RideConfirmation: React.FC = () => {
 
       const response = await api.post("/ride/estimate", payload);
       setRideInfo(response.data);
+      toaster.success({title:"Rota recalculada!"});
     } catch (error) {
-      console.error("Erro ao buscar a rota:", error);
+      toaster.error(defaultErrorToast(error));
+      console.error("Erro ao buscar a rota:", error);      
     }
   };
 
@@ -45,8 +49,7 @@ const RideConfirmation: React.FC = () => {
         value: driver.value,
       };
 
-      const response = await api.patch("/ride/confirm", payload);
-      console.log(response.data);
+      await api.patch("/ride/confirm", payload);
       navigate(`/ride/history/${state.customerRequest.customer_id}`);
     } catch (error) {
       console.error("Erro ao buscar a rota:", error);

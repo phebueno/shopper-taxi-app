@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
   const [customerId, setCustomerId] = useState("");
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
         origin,
         destination,
       } as CustomerRequest;
-      setLoading(true);
+      setIsLoading(true);
       const response = api.post("/ride/estimate", payload);
 
       toaster.promise(response, {
@@ -55,7 +55,7 @@ const Dashboard: React.FC = () => {
           title: "Calculando rota...",
           description: "Por favor, aguarde um momento.",
         },
-        finally: () => setLoading(false),
+        finally: () => setIsLoading(false),
       });
     } catch (error) {
       console.error("Erro ao buscar a rota:", error);
@@ -118,7 +118,7 @@ const Dashboard: React.FC = () => {
               type="submit"
               colorScheme="teal"
               width="full"
-              disabled={!customerId || !origin || !destination || loading}
+              disabled={!customerId || !origin || !destination || isLoading}
             >
               Buscar Rota
             </Button>
