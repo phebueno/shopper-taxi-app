@@ -10,8 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { MdModeEdit } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
-import { CustomerRequest, RideEstimate } from "../../types/rideTypes";
-import { formatDuration } from "../../utils/rideInfoUtils";
+import { CustomerRequest, RideEstimate } from "@/types/rideTypes";
+import { formatDuration } from "@/utils/rideInfoUtils";
 
 interface RideInfoCardProps {
   customerRequest: CustomerRequest;

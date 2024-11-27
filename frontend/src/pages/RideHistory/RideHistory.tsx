@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { DriverRide } from "../../types/rideTypes";
-import api from "../../services/api";
 import { useParams } from "react-router-dom";
 import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
-import { RideCard } from "../../components/RideCard";
+import { DriverRide } from "@/types/rideTypes";
+import { RideCard } from "@/components/RideCard";
 import DriverSelect from "./DriverSelect";
+import api from "@/services/api";
 
 type RideHistoryResponse = {
   customer_id: string;

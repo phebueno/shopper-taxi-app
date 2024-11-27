@@ -1,7 +1,5 @@
 import { useState } from "react";
-import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
-import { CustomerRequest } from "../../types/rideTypes";
 import {
   Box,
   Button,
@@ -10,6 +8,8 @@ import {
   VStack,
   Heading,
 } from "@chakra-ui/react";
+import api from "@/services/api";
+import { CustomerRequest } from "@/types/rideTypes";
 
 const Dashboard: React.FC = () => {
   const [customerId, setCustomerId] = useState("");

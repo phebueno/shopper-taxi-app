@@ -24,7 +24,6 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-      "import/no-relative-parent-imports": "warn",
     },
     settings: {
       "import/resolver": {

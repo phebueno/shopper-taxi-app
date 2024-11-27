@@ -5,7 +5,7 @@ import {
   Marker,
 } from "@vis.gl/react-google-maps";
 import EncodedPolylineRenderer from "./EncodedPolylineRenderer";
-import { RideEstimate } from "../../types/rideTypes";
+import { RideEstimate } from "@/types/rideTypes";
 
 type GoogleMapsProps = {
   rideRoute: RideEstimate;

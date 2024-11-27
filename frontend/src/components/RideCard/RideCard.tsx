@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
-import { DriverRide } from "../../types/rideTypes";
-import { formatDuration } from "../../utils/rideInfoUtils";
+import { DriverRide } from "@/types/rideTypes";
+import { formatDuration } from "@/utils/rideInfoUtils";
 
 interface RideCardProps {
   ride: DriverRide;

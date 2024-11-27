@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CustomerRequest, Driver, RideEstimate } from "../../types/rideTypes";
-import { RideMap } from "../../components/RideMap";
-import { DriverCard } from "../../components/DriverCard";
-import api from "../../services/api";
 import { Box, Heading, Text, VStack } from "@chakra-ui/react";
-import { RideInfoCard } from "../../components/RideInfoCard";
+import { CustomerRequest, Driver, RideEstimate } from "@/types/rideTypes";
+import { RideInfoCard } from "@/components/RideInfoCard";
+import { RideMap } from "@/components/RideMap";
+import { DriverCard } from "@/components/DriverCard";
+import api from "@/services/api";
 
 type RideConfirmationState = {
   customerRequest: CustomerRequest;
