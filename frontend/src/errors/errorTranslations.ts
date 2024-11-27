@@ -26,6 +26,11 @@ const errorTranslations: {
     description:
       "Algum dos seus dados informados não foi processado corretamente, tente novamente.",
   },
+  DRIVER_NOT_FOUND:{
+    title: "Motorista não encontrado.",
+    description:
+      "O motorista requisitado não está nos nossos servidores!",
+  },
 };
 
 export const translateError = (

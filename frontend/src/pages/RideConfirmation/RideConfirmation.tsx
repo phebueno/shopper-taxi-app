@@ -49,8 +49,25 @@ const RideConfirmation: React.FC = () => {
         value: driver.value,
       };
 
-      await api.patch("/ride/confirm", payload);
-      navigate(`/ride/history/${state.customerRequest.customer_id}`);
+      const response = api.patch("/ride/confirm", payload);
+      toaster.promise(response, {
+        success: () => {
+          setTimeout(() => {
+            navigate(`/ride/history/${state.customerRequest.customer_id}`);
+          }, 2500);
+          return {
+            title: "Seu motorista chegou!",
+            description: "Boa viagem, e obrigado por escolher a ShopperTaxi!",
+            duration: 2500,
+          };
+        },
+        error: (error) => defaultErrorToast(error),
+        loading: {
+          title: "Seu motorista está a caminho!",
+          description: "Por favor, se dirija ao local ponto de embarque.",
+        },
+        finally: () => {/*TODO setIsLoading false*/},
+      });
     } catch (error) {
       console.error("Erro ao buscar a rota:", error);
     }
