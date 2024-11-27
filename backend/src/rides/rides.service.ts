@@ -4,15 +4,15 @@ import {
   NotAcceptableException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateRideDto } from './dto/create-ride.dto';
-import { UpdateRideDto } from './dto/update-ride.dto';
-import { GoogleService } from '../google/google.service';
-import { RideEstimate } from './interfaces/rides.interface';
-import { GoogleRoute } from '../google/interfaces/google-route.interface';
-import { DriversService } from '../drivers/drivers.service';
-import { DriverDto } from '../drivers/dto/driver.dto';
-import { PrismaService } from '../prisma/prisma.service';
-import { CustomersService } from '../customers/customers.service';
+import { DriversService } from '@/drivers/drivers.service';
+import { GoogleService } from '@/google/google.service';
+import { PrismaService } from '@/prisma/prisma.service';
+import { CustomersService } from '@/customers/customers.service';
+import { UpdateRideDto } from '@/rides/dto/update-ride.dto';
+import { GoogleRoute } from '@/google/interfaces/google-route.interface';
+import { DriverDto } from '@/drivers/dto/driver.dto';
+import { RideEstimate } from '@/rides/interfaces/rides.interface';
+import { CreateRideDto } from '@/rides/dto/create-ride.dto';
 
 @Injectable()
 export class RidesService {
@@ -126,9 +126,7 @@ export class RidesService {
 
   async getRides(customerId: string, driverId?: number) {
     const rides = await this.prismaService.ride.findMany({
-      where: { customerId,
-        ...(driverId && { driverId })
-       },
+      where: { customerId, ...(driverId && { driverId }) },
       select: {
         id: true,
         createdAt: true,

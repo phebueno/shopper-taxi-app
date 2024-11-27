@@ -1,5 +1,5 @@
-import { GoogleRoute } from '../../google/interfaces/google-route.interface';
-import { DriverDto } from '../../drivers/dto/driver.dto';
+import { DriverDto } from '@/drivers/dto/driver.dto';
+import { GoogleRoute } from '@/google/interfaces/google-route.interface';
 
 export interface RideEstimate {
   origin: {

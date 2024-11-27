@@ -1,8 +1,8 @@
+import { DriversService } from '@/drivers/drivers.service';
+import { PrismaService } from '@/prisma/prisma.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { DriversService } from './drivers.service';
-import { PrismaService } from '../prisma/prisma.service';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
-import driversDefaultData from '../../prisma/seed/data/driver.data';
+import driversDefaultData from 'prisma/seed/data/driver.data';
 
 describe('DriversService', () => {
   let service: DriversService;

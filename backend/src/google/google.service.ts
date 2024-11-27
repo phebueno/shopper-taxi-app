@@ -1,7 +1,7 @@
+import { GoogleRoute } from '@/google/interfaces/google-route.interface';
+import { CreateRideDto } from '@/rides/dto/create-ride.dto';
 import { Injectable } from '@nestjs/common';
-import { CreateRideDto } from '../rides/dto/create-ride.dto';
 import axios from 'axios';
-import { GoogleRoute } from './interfaces/google-route.interface';
 
 @Injectable()
 export class GoogleService {

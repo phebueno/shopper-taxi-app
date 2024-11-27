@@ -1,3 +1,8 @@
+import { RidesService } from '@/rides/rides.service';
+import { CustomParseIntPipe } from '@/common/pipes/custom-parse-int.pipe';
+import { ParseToStringPipe } from '@/common/pipes/parse-to-string.pipe';
+import { CreateRideDto } from '@/rides/dto/create-ride.dto';
+import { UpdateRideDto } from '@/rides/dto/update-ride.dto';
 import {
   Controller,
   Get,
@@ -6,13 +11,7 @@ import {
   Patch,
   Param,
   Query,
-  ParseIntPipe,
 } from '@nestjs/common';
-import { RidesService } from './rides.service';
-import { CreateRideDto } from './dto/create-ride.dto';
-import { UpdateRideDto } from './dto/update-ride.dto';
-import { ParseToStringPipe } from '../common/pipes/parse-to-string.pipe';
-import { CustomParseIntPipe } from '../common/pipes/custom-parse-int.pipe';
 
 @Controller('ride')
 export class RidesController {

@@ -9,7 +9,7 @@ import {
   Image,
   Button,
 } from "@chakra-ui/react";
-import { Driver } from "../../types/rideTypes";
+import { Driver } from "@/types/rideTypes";
 
 type DriverProps = {
   driver: Driver;

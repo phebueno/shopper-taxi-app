@@ -1,30 +1,29 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RidesService } from './rides.service';
-import { PrismaService } from '../prisma/prisma.service';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import {
   BadRequestException,
   NotAcceptableException,
   NotFoundException,
 } from '@nestjs/common';
-import { GoogleService } from '../google/google.service';
-import { DriversService } from '../drivers/drivers.service';
-import { CustomersService } from '../customers/customers.service';
 import { Driver, Ride } from '@prisma/client';
-import { CreateRideDto } from './dto/create-ride.dto';
+import { RidesService } from '@/rides/rides.service';
+import { GoogleService } from '@/google/google.service';
+import { DriversService } from '@/drivers/drivers.service';
+import { CustomersService } from '@/customers/customers.service';
+import { PrismaService } from '@/prisma/prisma.service';
+import { CreateRideDto } from '@/rides/dto/create-ride.dto';
 import {
   GoogleRoute,
   Leg,
   Route,
-} from '../google/interfaces/google-route.interface';
-import { DriverDto } from '../drivers/dto/driver.dto';
-import { RideEstimate } from './interfaces/rides.interface';
+} from '@/google/interfaces/google-route.interface';
+import { RideEstimate } from '@/rides/interfaces/rides.interface';
+import { DriverDto } from '@/drivers/dto/driver.dto';
 
 describe('RidesService', () => {
   let ridesService: RidesService;
   let googleService: DeepMockProxy<GoogleService>;
   let driversService: DeepMockProxy<DriversService>;
-  let customersService: DeepMockProxy<CustomersService>;
   let prismaService: DeepMockProxy<PrismaService>;
 
   beforeEach(async () => {
@@ -41,7 +40,6 @@ describe('RidesService', () => {
     ridesService = module.get<RidesService>(RidesService);
     googleService = module.get(GoogleService);
     driversService = module.get(DriversService);
-    customersService = module.get(CustomersService);
     prismaService = module.get(PrismaService);
   });
 
@@ -320,7 +318,7 @@ describe('RidesService', () => {
         googleRoute.routes[0].distanceMeters,
       );
     });
-    
+
     it('should throw NotFoundException if no route is found by Google', async () => {
       const createRideDto: CreateRideDto = {
         customer_id: 'customer123',
@@ -359,6 +357,6 @@ describe('RidesService', () => {
             'Google could not calculate the distance for the provided coordinates.',
         }),
       );
-    });    
+    });
   });
 });

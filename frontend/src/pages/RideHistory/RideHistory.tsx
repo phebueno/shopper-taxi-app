@@ -41,7 +41,7 @@ const RideHistory: React.FC = () => {
 
   useEffect(() => {
     fetchRideHistory(customer_id);
-  }, []);
+  });
 
   useEffect(() => {
     console.log(driverId);

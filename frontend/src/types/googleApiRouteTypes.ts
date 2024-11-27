@@ -14,7 +14,7 @@ export interface Destination {
   placeId: string;
 }
 
-export interface GeocoderStatus {}
+export type GeocoderStatus = object;
 
 export interface Route {
   legs: Leg[];

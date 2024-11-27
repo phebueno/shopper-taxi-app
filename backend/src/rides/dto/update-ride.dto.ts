@@ -1,7 +1,14 @@
-import { IsInt, IsNotEmpty, IsNumber, IsString, Min, ValidateNested } from 'class-validator';
-import { CreateRideDto } from './create-ride.dto';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Min,
+  ValidateNested,
+} from 'class-validator';
 import { Transform, TransformFnParams, Type } from 'class-transformer';
-import { UpdateDriverDto } from '../../drivers/dto/update-driver.dto';
+import { CreateRideDto } from '@/rides/dto/create-ride.dto';
+import { UpdateDriverDto } from '@/drivers/dto/update-driver.dto';
 
 export class UpdateRideDto extends CreateRideDto {
   @IsInt()

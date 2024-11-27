@@ -22,6 +22,7 @@ const Dashboard: React.FC = () => {
     e.preventDefault();
 
     if (!customerId || !origin || !destination) {
+      //TODO: EXHIBIT ERROR HERE
       return;
     }
 

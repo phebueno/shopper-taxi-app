@@ -1,8 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GoogleService } from './google.service';
+import { GoogleService } from '@/google/google.service';
+import {
+  GoogleRoute,
+  Leg,
+  Route,
+} from '@/google/interfaces/google-route.interface';
+import { CreateRideDto } from '@/rides/dto/create-ride.dto';
 import axios from 'axios';
-import { CreateRideDto } from '../rides/dto/create-ride.dto';
-import { GoogleRoute, Leg, Route } from './interfaces/google-route.interface';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;

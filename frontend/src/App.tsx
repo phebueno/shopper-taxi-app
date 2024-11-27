@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Dashboard } from "./pages/Dashboard";
+import { Dashboard } from "@/pages/Dashboard";
 import { RideConfirmation } from "./pages/RideConfirmation";
 import "./App.css";
 import { RideHistory } from "./pages/RideHistory";
