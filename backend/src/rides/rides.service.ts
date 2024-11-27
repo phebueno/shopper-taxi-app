@@ -60,8 +60,7 @@ export class RidesService {
 
   async estimateRide(createRideDto: CreateRideDto) {
     const googleRoute = await this.googleService.getApiRouteData(createRideDto);
-
-    if (!googleRoute.routes.length) {
+    if (!googleRoute.routes || !googleRoute.routes.length) {
       throw new NotFoundException({
         error_code: 'ROUTE_NOT_FOUND',
         error_description:
