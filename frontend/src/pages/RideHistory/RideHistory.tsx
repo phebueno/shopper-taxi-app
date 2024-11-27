@@ -16,6 +16,7 @@ const RideHistory: React.FC = () => {
   const [rideHistory, setRideHistory] = useState<RideHistoryResponse>();
   const [customerId, setCustomerId] = useState<string>(customer_id || "");
   const [driverId, setDriverId] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchRideHistory = async (customerId?: string, driverId?: number) => {
     if (customerId) {
@@ -26,6 +27,8 @@ const RideHistory: React.FC = () => {
       }
 
       try {
+        setIsLoading(true);
+        console.log('here');
         const response = await api.get(
           `/ride/${customerId}${
             queryParams.toString() ? `?${queryParams.toString()}` : ""
@@ -33,8 +36,11 @@ const RideHistory: React.FC = () => {
         );
         console.log(response.data);
         setRideHistory(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Erro ao buscar a rota:", error);
+      } finally{
+        setIsLoading(false);
       }
     }
   };
@@ -74,7 +80,7 @@ const RideHistory: React.FC = () => {
         </Box>
       </Box>
       {rideHistory?.rides.length ? (
-        rideHistory.rides.map((ride) => <RideCard key={ride.id} ride={ride} />)
+        rideHistory.rides.map((ride) => <RideCard key={ride.id} ride={ride} isLoading={isLoading}/>)
       ) : (
         <Text>Nenhuma viagem encontrada.</Text>
       )}
