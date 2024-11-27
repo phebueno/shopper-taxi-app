@@ -31,6 +31,16 @@ const errorTranslations: {
     description:
       "O motorista requisitado não está nos nossos servidores!",
   },
+  INVALID_DRIVER:{
+    title: "Informações de motorista inválidas.",
+    description:
+      "Não foi possível pesquisar por este motorista!",
+  },
+  NO_RIDES_FOUND:{
+    title: "Nenhuma viagem encontrada.",
+    description:
+      "Este usuário ainda não fez nenhuma viagem!",
+  },
 };
 
 export const translateError = (

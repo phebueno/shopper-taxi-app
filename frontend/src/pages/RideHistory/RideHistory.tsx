@@ -5,6 +5,8 @@ import { DriverRide } from "@/types/rideTypes";
 import { RideCard } from "@/components/RideCard";
 import DriverSelect from "./DriverSelect";
 import api from "@/services/api";
+import { toaster } from "@/components/ui/toaster";
+import { defaultErrorToast } from "@/errors/toastErrors";
 
 type RideHistoryResponse = {
   customer_id: string;
@@ -13,10 +15,10 @@ type RideHistoryResponse = {
 
 const RideHistory: React.FC = () => {
   const { customer_id } = useParams<{ customer_id: string }>();
-  const [rideHistory, setRideHistory] = useState<RideHistoryResponse>();
+  const [rideHistory, setRideHistory] = useState<RideHistoryResponse | null>();
   const [customerId, setCustomerId] = useState<string>(customer_id || "");
   const [driverId, setDriverId] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const fetchRideHistory = async (customerId?: string, driverId?: number) => {
     if (customerId) {
@@ -35,9 +37,14 @@ const RideHistory: React.FC = () => {
         );
         setRideHistory(response.data);
         setIsLoading(false);
+        toaster.success({
+          title: `${response.data?.rides.length} viagens encontradas!`,
+        });
       } catch (error) {
+        toaster.error(defaultErrorToast(error));
         console.error("Erro ao buscar a rota:", error);
-      } finally{
+        setRideHistory(null);
+      } finally {
         setIsLoading(false);
       }
     }
@@ -45,7 +52,7 @@ const RideHistory: React.FC = () => {
 
   useEffect(() => {
     fetchRideHistory(customer_id);
-  },[]);
+  }, []);
 
   const searchCustomerId = () => {
     if (customerId) {
@@ -70,7 +77,7 @@ const RideHistory: React.FC = () => {
         <Box mb={4}>
           <Text mt={5}>Filtrar por Motorista:</Text>
           <Flex align={"center"} justifyContent={"space-between"} gap={"5"}>
-            <DriverSelect driverId={driverId} setDriverId={setDriverId}/>
+            <DriverSelect driverId={driverId} setDriverId={setDriverId} />
             <Button bgColor={"black"} onClick={searchCustomerId}>
               Pesquisar
             </Button>
@@ -78,7 +85,9 @@ const RideHistory: React.FC = () => {
         </Box>
       </Box>
       {rideHistory?.rides.length ? (
-        rideHistory.rides.map((ride) => <RideCard key={ride.id} ride={ride} isLoading={isLoading}/>)
+        rideHistory.rides.map((ride) => (
+          <RideCard key={ride.id} ride={ride} isLoading={isLoading} />
+        ))
       ) : (
         <Text>Nenhuma viagem encontrada.</Text>
       )}
