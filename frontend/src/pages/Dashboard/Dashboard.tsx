@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Input, Text, VStack, Heading } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
-import api from "@/services/api";
 import { CustomerRequest } from "@/types/rideTypes";
 import { defaultErrorToast } from "@/errors/toastErrors";
+import api from "@/services/api";
 
 const Dashboard: React.FC = () => {
   const [customerId, setCustomerId] = useState("");
