@@ -1,28 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  Button,
-  Input,
-  Text,
-  VStack,
-  Heading,
-} from "@chakra-ui/react";
+import { Box, Button, Input, Text, VStack, Heading } from "@chakra-ui/react";
+import { toaster } from "@/components/ui/toaster";
 import api from "@/services/api";
 import { CustomerRequest } from "@/types/rideTypes";
+import { defaultErrorToast } from "@/errors/toastErrors";
 
 const Dashboard: React.FC = () => {
   const [customerId, setCustomerId] = useState("");
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!customerId || !origin || !destination) {
-      //TODO: EXHIBIT ERROR HERE
+      toaster.create({
+        title: "Preencha todos os campos!",
+        type: "warning",
+        duration: 3000,
+      });
       return;
     }
 
@@ -32,19 +31,34 @@ const Dashboard: React.FC = () => {
         origin,
         destination,
       } as CustomerRequest;
+      setLoading(true);
+      const response = api.post("/ride/estimate", payload);
 
-      const response = await api.post("/ride/estimate", payload);
-   
-      setTimeout(() => {
-        navigate(`/ride/confirm`, {
-          state: {
-            customerRequest: payload,
-            rideInfo: response.data,
-          },
-        });
-      }, 1500);
+      toaster.promise(response, {
+        success: (data) => {
+          setTimeout(() => {
+            navigate(`/ride/confirm`, {
+              state: {
+                customerRequest: payload,
+                rideInfo: data.data,
+              },
+            });
+          }, 1500);
+          return {
+            title: "Rota encontrada",
+            description: "Confira os motoristas disponíveis!",
+            duration: 3000,
+          };
+        },
+        error: (error) => defaultErrorToast(error),
+        loading: {
+          title: "Calculando rota...",
+          description: "Por favor, aguarde um momento.",
+        },
+        finally: () => setLoading(false),
+      });
     } catch (error) {
-      console.error("Erro ao buscar a rota:", error);      
+      console.error("Erro ao buscar a rota:", error);
     }
   };
 
@@ -62,9 +76,8 @@ const Dashboard: React.FC = () => {
         borderColor="gray.200"
       >
         <form onSubmit={handleSubmit}>
-          <VStack >
-            <Box                 width={"100%"}
-            >
+          <VStack>
+            <Box width={"100%"}>
               <Text mb={1} fontWeight="bold">
                 ID do Usuário
               </Text>
@@ -77,8 +90,7 @@ const Dashboard: React.FC = () => {
               />
             </Box>
 
-            <Box                 width={"100%"}
-            >
+            <Box width={"100%"}>
               <Text mb={1} fontWeight="bold">
                 Origem
               </Text>
@@ -90,9 +102,7 @@ const Dashboard: React.FC = () => {
                 borderColor="gray.300"
               />
             </Box>
-
-            <Box                 width={"100%"}
-            >
+            <Box width={"100%"}>
               <Text mb={1} fontWeight="bold">
                 Destino
               </Text>
@@ -104,12 +114,11 @@ const Dashboard: React.FC = () => {
                 borderColor="gray.300"
               />
             </Box>
-
             <Button
               type="submit"
               colorScheme="teal"
               width="full"
-              disabled={!customerId || !origin || !destination}
+              disabled={!customerId || !origin || !destination || loading}
             >
               Buscar Rota
             </Button>

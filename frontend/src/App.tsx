@@ -3,8 +3,9 @@ import { Dashboard } from "@/pages/Dashboard";
 import { RideConfirmation } from "@/pages/RideConfirmation";
 import { RideHistory } from "@/pages/RideHistory";
 import "@/App.css";
+import { Toaster } from "@/components/ui/toaster";
 
-function App() {  
+function App() {
   return (
     <Router>
       <Routes>
@@ -12,6 +13,7 @@ function App() {
         <Route path="/ride/confirm" element={<RideConfirmation />} />
         <Route path="/ride/history/:customer_id" element={<RideHistory />} />
       </Routes>
+      <Toaster />
     </Router>
   );
 }
