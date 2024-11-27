@@ -6,10 +6,12 @@ import {
   VStack,
   HStack,
   Badge,
-  Image,
   Button,
 } from "@chakra-ui/react";
 import { Driver } from "@/types/rideTypes";
+import { Avatar } from "@/components/ui/avatar";
+import { Rating } from "@/components/ui/rating";
+import PopoverCustom from "@/components/DriverCard/PopoverCustom";
 
 type DriverProps = {
   driver: Driver;
@@ -26,36 +28,53 @@ const DriverCard: React.FC<DriverProps> = ({ driver, confirmRide }) => {
       p="4"
       boxShadow="md"
     >
-      <Image src="" alt={`Foto de ${name}`} borderRadius="md" mb="4" />
-
-      <Flex align="center" mb="4">
-        <VStack align="start">
-          <Text fontSize="lg" fontWeight="bold">
-            {driver.name}
+      <Flex gap={2}>
+        <Flex my={4} alignItems="center" justifyContent="start">
+          <Avatar size="md" name={driver.name} src={""} />
+          <Flex pl="4" fontSize="sm" flexDirection="column" alignItems="start">
+            <VStack align="start">
+              <Text fontSize="lg" fontWeight="bold">
+                {driver.name}{" "}
+                <PopoverCustom
+                  text={driver.description}
+                  name={driver.name}
+                  messageMode={true}
+                />
+              </Text>
+              <HStack>
+                <Text>Avaliação:</Text>
+                <Badge colorScheme="yellow">
+                  <Rating
+                    size={"xsm"}
+                    defaultValue={+driver.review.rating.toFixed(1)}
+                    readOnly
+                  />
+                </Badge>
+                <PopoverCustom text={driver.review.comment} />
+              </HStack>
+            </VStack>
+          </Flex>
+        </Flex>
+        <Flex
+          flexDirection={"column"}
+          align={"center"}
+          borderColor={"black"}
+          bgColor={"gray.100"}
+          borderRadius={"md"}
+          padding={"2"}
+          justifyContent={"space-evenly"}
+        >
+          <Text mb="2" borderColor={"black"}>
+            <Text fontWeight={"bold"}>Preço:</Text>{" "}
+            <Text>R$ {driver.value.toFixed(2).replace(".", ",")}</Text>
           </Text>
-          <HStack>
-            <Text>Rating:</Text>
-            <Badge colorScheme="yellow">
-              {driver.review.rating.toFixed(1)}
-            </Badge>
-          </HStack>
-        </VStack>
+          <Button onClick={() => confirmRide(driver)}>Escolher</Button>
+        </Flex>
       </Flex>
 
-      <Text mb="2">
+      <Text>
         <strong>Veículo:</strong> {driver.vehicle}
       </Text>
-
-      <Text mb="2">
-        <strong>Preço:</strong> R$ {driver.value.toFixed(2).replace(".", ",")}
-      </Text>
-
-      <Text fontSize="sm" color="gray.600">
-        {driver.description}
-      </Text>
-      <Button bgColor={"black"} onClick={() => confirmRide(driver)}>
-        Escolher
-      </Button>
     </Box>
   );
 };

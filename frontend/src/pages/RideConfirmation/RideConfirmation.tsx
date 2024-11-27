@@ -66,7 +66,6 @@ const RideConfirmation: React.FC = () => {
           title: "Seu motorista está a caminho!",
           description: "Por favor, se dirija ao local ponto de embarque.",
         },
-        finally: () => {/*TODO setIsLoading false*/},
       });
     } catch (error) {
       console.error("Erro ao buscar a rota:", error);
@@ -110,8 +109,7 @@ const RideConfirmation: React.FC = () => {
                 <DriverCard
                   key={driver.id}
                   driver={driver}
-                  confirmRide={confirmRide}
-                />
+                  confirmRide={confirmRide} />
               ))}
             </VStack>
           ) : (
