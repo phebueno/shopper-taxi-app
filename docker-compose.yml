@@ -10,6 +10,8 @@ services:
       - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - VITE_GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - VITE_BASE_API_URL=${BASE_API_URL:-http://localhost:8080}
     depends_on:
       - backend
 
@@ -24,7 +26,7 @@ services:
       - /app/node_modules
     environment:
       - DATABASE_URL=postgresql://${DB_USER:-manager}:${DB_PASSWORD:-123456}@db:${DB_PORT:-5432}/${DB_NAME:-shopper-taxi}
-    depends_on:
+    depends_on: 
       - db
 
   db:
@@ -38,6 +40,11 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-123456}
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DB_USER:-manager}", "-d", "${DB_NAME:-shopper-taxi}"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
 
 volumes:
   db_data:
