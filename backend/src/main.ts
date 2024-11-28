@@ -9,6 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe(validationPipeOptions));
+  console.log(process.env)
+  console.log(process.env.GOOGLE_API_KEY)
 
   await app.listen(process.env.PORT ?? 8080);
 }
