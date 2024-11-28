@@ -11,7 +11,7 @@ model Customer {
   id String   @id @default(cuid()) @unique
 
   userId Int?  @unique
-  user   User? @relation(fields: [userId], references: [id])
+  user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -40,7 +40,7 @@ model Driver {
   description String?
   vehicle     String
   reviewId    Int?
-  review      Review? @relation(fields: [reviewId], references: [id])
+  review      Review? @relation(fields: [reviewId], references: [id], onDelete: Cascade)
   costPerKm   Float
   minKm       Int
 
@@ -71,9 +71,9 @@ model Ride {
   value       Float
 
   customerId String
-  customer   Customer @relation(fields: [customerId], references: [id])
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   driverId   Int
-  driver     Driver   @relation(fields: [driverId], references: [id])
+  driver     Driver   @relation(fields: [driverId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
